@@ -125,7 +125,10 @@
         echo '<p style="margin-top:15px; margin-left:2px;"><strong>Commit message (about changes):</strong></p>';
         echo '<label class="screen-reader-text" for="mit-message-for-github">Commit message:</label>';
         echo '<input id="commit-message-for-github" name="commit-message-for-github" type="text" placeholder="Your comment about the changes" style="width:99%;"><br>';
-        echo '<div id="github-update-action" style="margin-top:15px;"><span id="save-to-github" class="button button-primary button-large" onclick="create_or_update_file_on_github()">Upload to GitHub</span></div>';
+        echo '<div id="github-update-action" style="margin-top:15px;">';
+        echo    '<span id="save-to-github" class="button button-primary button-large" onclick="create_or_update_file_on_github()">Upload to <img src="'.plugin_dir_url(__FILE__).'../images/GitHub-Mark-Light-32px.png" alt="Github" height="16"></span>';
+        echo    '<span id="download-from-github" style="margin-left: 7px" class="button button-primary button-large disabled" onclick="download_file_from_github()">Download from <img src="'.plugin_dir_url(__FILE__).'../images/GitHub-Mark-Light-32px.png" alt="Github" height="16" ></span>';
+        echo '</div>';
         echo '<div style="margin-top:15px; margin-left:2px; font-style: italic; font-size: 12px;"><span id="save-to-github-status">Status: Ready</span></div>';
 
     }

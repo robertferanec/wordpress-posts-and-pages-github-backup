@@ -5,6 +5,52 @@
 
 github_update_file_info(); //show the initial info about the file
 
+function download_file_from_github(){
+
+    //get the original file content as soon as possible
+    var original_filecontent = document.getElementById('content');
+
+    //Status bar element
+    var status_line = document.getElementById('save-to-github-status');
+    status_line.innerHTML = '<span>Status: Connecting ...</span>';
+
+    //File info elements
+    var github_file_difference_info = document.getElementById('github_file_difference_info');
+
+    //Prepare variables for the API request
+    var branch = "master";
+    var filename = get_path_and_file_name(); //for example "test2/firstfile.txt" (include also the relative path)
+    var contents_url = document.getElementById('api_url_to_repository').value; //for example https://api.github.com/repos/FEDEVEL/wordpress-web
+    var github_token = document.getElementById('github_token').value; //token needed for login to github
+
+    var apiurl = contents_url + '/contents/'+ filename; //path to the file
+    var filedata = '{"ref":"' + branch + '"}';
+
+    //Send the request to GitHub
+    jQuery.ajax({
+        url: apiurl,
+        type: 'GET',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "token " + github_token);
+        },
+        data: filedata
+
+    }).done(function (response) {
+        //We have the file info and content
+
+        //We are going to replace the content in editor
+        var basecontent = atob(response.content); //we have to change the received file content back from base64
+        original_filecontent.value = basecontent;
+        //console.log(basecontent); //show content of the file
+
+        github_update_file_info(); //update all the info
+
+    }).fail(function (response) {
+        status_line.innerHTML = '<span style="color: red">Status: Error. Could not be downloaded.</span>';
+    });
+
+}
+
 //check if file exists on github, get its latest commit info
 function github_update_file_info(){
 
@@ -45,6 +91,10 @@ function github_update_file_info(){
         if (!((response === null) || (response.length === 0))) //if response is empty, then the file doesn't exists
         {
             //File exists
+
+            //enable download button
+            var download_from_github = document.getElementById('download-from-github');
+            download_from_github.classList.remove('disabled');
 
             //We are going to show the date of latest commit on the web. To do so, the date received from github has to be adjusted and re-formatted
             var commit_date = response[0].commit.committer.date; //get the commit date from response
@@ -94,6 +144,7 @@ function github_update_file_info(){
             //The file doesn't exists
             github_file_exists_info.innerHTML = 'File info: <span style="font-style: italic">Not found on GitHub</span>';
             github_file_updated_info.innerHTML = 'Last updated: <span style="font-style: italic">Never</span>';
+            github_file_difference_info.innerHTML = 'Difference: N/A';
             status_line.innerHTML = '<span>Status: Ready</span>';
         }
 
