@@ -114,7 +114,7 @@
         echo '<input type="hidden" id="user_name_for_github" value="'.$current_user->user_firstname.' '.$current_user->user_lastname.'">';
         echo '<input type="hidden" id="api_url_to_repository" value="'.$api_url_to_repository.'">';
         echo '<input type="hidden" id="github_token" value="'.$github_token.'">';
-        echo '<input type="hidden" id="web-base-url-for-github" value="'.get_home_url().'">';
+        echo '<input type="hidden" id="web-base-url-for-github" value="'.get_home_url().'/">';
 
         //html code of the module
         echo '<div><span id="github_file_exists_info">File info: <span style="font-style: italic">Checking ...</span></span></div>';
