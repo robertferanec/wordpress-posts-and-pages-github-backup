@@ -7,9 +7,6 @@ github_update_file_info(); //show the initial info about the file
 
 function download_file_from_github(){
 
-    //get the original file content as soon as possible
-    var original_filecontent = document.getElementById('content');
-
     //Status bar element
     var status_line = document.getElementById('save-to-github-status');
     status_line.innerHTML = '<span>Status: Connecting ...</span>';
@@ -40,7 +37,9 @@ function download_file_from_github(){
 
         //We are going to replace the content in editor
         var basecontent = atob(response.content); //we have to change the received file content back from base64
-        original_filecontent.value = basecontent;
+
+        var original_filecontent = document.getElementById('content'); //get content element
+        original_filecontent.value = basecontent; //update the content element
         //console.log(basecontent); //show content of the file
 
         github_update_file_info(); //update all the info
