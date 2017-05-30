@@ -170,7 +170,6 @@ function github_update_file_info(){
                 github_file_exists_info.innerHTML = 'File info: <span style="font-style: italic">Exists on GitHub. Located <a href="'+ response.html_url + '" target="_blank">here</a></span>'; //Show the link to the file
 
                 //We are going to compare the files
-                //var basecontent = atob(response.content); //we have to change the received file content back from base64
                 var basecontent = b64DecodeUnicode(response.content); //we have to change the received file content back from base64
                 //console.log(basecontent); //show content of the file
                 github_file_difference_info.innerHTML = 'Difference: <span style="font-style: italic;color: dodgerblue;">Comparing ...</span>';
@@ -295,7 +294,6 @@ function create_or_update_file_on_github() {
         //prepare everything to update the file
         var filemessage = document.getElementById('commit-message-for-github').value;
         var filecontent = document.getElementById('content').value;
-        //var basecontent = btoa(filecontent);
         var basecontent = b64EncodeUnicode(filecontent);
 
         //prepare the data needed to update a file
