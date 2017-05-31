@@ -15,6 +15,7 @@
     function posts_and_pages_github_backup_settings() {
         register_setting( 'posts_and_pages_github_backup_settings_group', 'url_to_repository' );
         register_setting( 'posts_and_pages_github_backup_settings_group', 'github_token' );
+        register_setting( 'posts_and_pages_github_backup_settings_group', 'branch_in_repository' );
     }
 
     //when this plugin is activated, set the variables into default values
@@ -22,6 +23,7 @@
     function posts_and_pages_github_backup_set_default_options(){
         update_option('url_to_repository', '');
         update_option('github_token', '');
+        update_option('branch_in_repository', '');
     }
 
     //Here is the "HTML" code of our Admin Setting Page
@@ -39,6 +41,7 @@
                 do_settings_sections( 'posts_and_pages_github_backup_settings_group' );
                 $url_to_repository = esc_attr(get_option('url_to_repository'));
                 $github_token = esc_attr(get_option('github_token'));
+                $branch_in_repository = esc_attr(get_option('branch_in_repository'));
                 ?>
                 <table class="form-table">
                     <tr valign="top">
@@ -49,6 +52,16 @@
                                 <input type="text" id="url_to_repository" name="url_to_repository" value="<?php echo $url_to_repository; ?>" style='width:50em'>
                             </div>
                             <div style="font-size: 12px;font-style: italic;margin-left: 3px">For example: https://github.com/FEDEVEL/wordpress-website</div>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Branch:</th>
+                        <td>
+                            <div>
+                                <label class="screen-reader-text" for="branch_in_repository">Branch:</label>
+                                <input type="text" id="branch_in_repository" name="branch_in_repository" value="<?php echo $branch_in_repository; ?>" style='width:50em'>
+                            </div>
+                            <div style="font-size: 12px;font-style: italic;margin-left: 3px">For example: master</div>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -108,12 +121,14 @@
         $tmp = explode("/",$url_to_repository,4); //we need to adjust the url for API, take out the USER_OR_COMPANY/REPOSITORY from the url
         $api_url_to_repository = 'https://api.github.com/repos/'.$tmp[3]; //This is how it should look: https://api.github.com/repos/USER_OR_COMPANY/REPOSITORY
         $github_token = esc_attr(get_option('github_token'));
+        $branch_in_repository = esc_attr(get_option('branch_in_repository'));
 
         //store all the info in the hidden input elements
         echo '<input type="hidden" id="user_email_for_github" value="'.$current_user->user_email.'">';
         echo '<input type="hidden" id="user_name_for_github" value="'.$current_user->user_firstname.' '.$current_user->user_lastname.'">';
         echo '<input type="hidden" id="api_url_to_repository" value="'.$api_url_to_repository.'">';
         echo '<input type="hidden" id="github_token" value="'.$github_token.'">';
+        echo '<input type="hidden" id="branch_in_repository" value="'.$branch_in_repository.'">';
         echo '<input type="hidden" id="web-base-url-for-github" value="'.get_home_url().'/">';
 
         //html code of the module

@@ -64,13 +64,13 @@ function download_file_from_github(){
     status_line.innerHTML = '<span>Status: Connecting ...</span>';
 
     //Prepare variables for the API request
-    var branch = "master";
+    var branch = document.getElementById('branch_in_repository').value;
     var filename = get_path_and_file_name(); //for example "test2/firstfile.txt" (include also the relative path)
     var contents_url = document.getElementById('api_url_to_repository').value; //for example https://api.github.com/repos/FEDEVEL/wordpress-web
     var github_token = document.getElementById('github_token').value; //token needed for login to github
 
-    var apiurl = contents_url + '/contents/'+ filename; //path to the file
-    var filedata = '{"ref":"' + branch + '"}';
+    var apiurl = contents_url + '/contents/'+ filename +'?ref='+ branch; //path to the file
+    var filedata = '';
 
     //Send the request to GitHub
     jQuery.ajax({
@@ -115,10 +115,10 @@ function github_update_file_info(){
     var github_file_difference_info = document.getElementById('github_file_difference_info');
 
     //Prepare variables for the API request
-    var branch = "master";
+    var branch = document.getElementById('branch_in_repository').value;
     var filename = get_path_and_file_name(); //for example "test2/firstfile.txt" (include also the relative path)
     var contents_url = document.getElementById('api_url_to_repository').value; //for example https://api.github.com/repos/FEDEVEL/wordpress-web
-    var apiurl = contents_url + '/commits?ref=' + branch + '&path=' + filename; //this is the url to get commits for specific file
+    var apiurl = contents_url + '/commits?sha=' + branch + '&path=' + filename; //this is the url to get commits for specific file
     var github_token = document.getElementById('github_token').value; //token needed for login to github
 
     //Prepare the data specific for this request
@@ -136,7 +136,7 @@ function github_update_file_info(){
     }).done(function (response) {
         //console.log(response);
 
-        if (!((response === null) || (response.length === 0))) //if response is empty, then the file doesn't exists
+        if (!((response === null) || (response.length === 0))) //If response is empty, then the file doesn't exists
         {
             //File exists
 
@@ -153,7 +153,7 @@ function github_update_file_info(){
             //Now, let's compare the local file with the one on github
             //First we need to get the file
             // Note: Maybe the comparision can be done through SHA, but I could not find a quick way how Github calculates it, so we will compare the content of files manually
-            var apiurl = contents_url + '/contents/'+ filename; //path to the file
+            var apiurl = contents_url + '/contents/'+ filename +'?ref='+ branch; //path to the file
             var filedata = '{"ref":"' + branch + '"}';
 
             //Send the request to GitHub
@@ -264,10 +264,10 @@ function create_or_update_file_on_github() {
     var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
 
     //Prepare variables for the API request
-    var branch = "master";
+    var branch = document.getElementById('branch_in_repository').value;
     var filename = get_path_and_file_name(); //for example "test2/firstfile.txt" (include also the relative path)
     var contents_url = document.getElementById('api_url_to_repository').value;
-    var apiurl = contents_url + '/contents/' + filename; // For example: 'https://api.github.com/repos/FEDEVEL/wordpress-test/contents/{+path}'; //path to the repository. Notice the "content" inside the url
+    var apiurl = contents_url + '/contents/'+ filename +'?ref='+ branch; //path to the file
     var github_token = document.getElementById('github_token').value;
 
     //For new commits, we will use the current user information, so we know who made the changes
