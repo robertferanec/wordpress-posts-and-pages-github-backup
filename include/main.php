@@ -69,7 +69,7 @@
                         <td>
                             <div>
                                 <label class="screen-reader-text" for="github_token">GitHub token:</label>
-                                <input type="text" id="github_token" name="github_token" value="<?php echo $github_token; ?>" style='width:40em'>
+                                <input type="password" id="github_token" name="github_token" value="<?php echo $github_token; ?>" style='width:40em'>
                             </div>
                             <div style="font-size: 12px;font-style: italic;margin-left: 3px">
                                 To generate token, login to your github and go to <a href="https://github.com/settings/tokens" target="_blank">Personal access tokens</a>.<br>
