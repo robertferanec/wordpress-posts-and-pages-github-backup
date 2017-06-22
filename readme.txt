@@ -1,10 +1,10 @@
-=== Posts and Pages Github Backup ===
+=== Posts and Pages GitHub Backup ===
 Contributors: robertferanec
 Donate link: https://www.patreon.com/robertferanec
 Tags: github, backup
 Requires at least: 3.0.1
 Tested up to: 4.8
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ Use Upload/Download buttons.
 5. Changes visible on GitHub
 
 == Changelog ==
+
+= 1.1 =
+* FIX: GitHub returned error when name was empty
 
 = 1.0 =
 * Initial version
