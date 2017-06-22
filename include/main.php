@@ -124,8 +124,11 @@
         $branch_in_repository = esc_attr(get_option('branch_in_repository'));
 
         //store all the info in the hidden input elements
+	$user_name_for_github = $current_user->user_firstname.' '.$current_user->user_lastname;
+	if (strlen($user_name_for_github) < 2) //username must not be empty, github connection will fail
+	    $user_name_for_github = $current_user->user_login; //if user didnt fill up first and last name in wordpress, use username
         echo '<input type="hidden" id="user_email_for_github" value="'.$current_user->user_email.'">';
-        echo '<input type="hidden" id="user_name_for_github" value="'.$current_user->user_firstname.' '.$current_user->user_lastname.'">';
+        echo '<input type="hidden" id="user_name_for_github" value="'.$user_name_for_github.'">';
         echo '<input type="hidden" id="api_url_to_repository" value="'.$api_url_to_repository.'">';
         echo '<input type="hidden" id="github_token" value="'.$github_token.'">';
         echo '<input type="hidden" id="branch_in_repository" value="'.$branch_in_repository.'">';
